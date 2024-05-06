@@ -60,6 +60,27 @@ services:
     working_dir: /var/www/html
     networks:
       - laravel
+  artisan:
+    build: 
+      context: .
+      dockerfile: php.dockerfile
+    container_name: artisan
+    working_dir: /var/www/html/laravel-fresh-app
+    entrypoint: ["php", "artisan"]
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - laravel
+
+  npm:
+    image: node:current-alpine3.19
+    container_name: npm
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html/laravel-fresh-app
+    entrypoint: ["npm"]
+    networks:
+      - laravel
 
 networks:
   laravel:
